@@ -21,7 +21,6 @@ public class DropMove implements Move {
 	private int stepsToVacantPos;
 	private int boxHeight;
 	//private ActiveTetromino activeTetronimo;
-
 	@Override
 	public boolean isValid(Board board) {
 		Rectangle r = board.getActiveTetromino().getBoundingBox(); //get box of active tetronimo

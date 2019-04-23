@@ -144,13 +144,13 @@ public class Game {
 		//
 		ActiveTetromino activeTetromino = board.getActiveTetromino();
 		// Check whether it has landed
-		if (activeTetromino.getBoundingBox().getMinY() > 0) {
+
 
 			if (activeTetromino != null) {
 				// apply gravity
 				activeTetromino = activeTetromino.translate(0, -1);
 			}
-		}
+		
 		else if(board.canPlaceTetromino(nextTetromino)){
 			// promote next tetromino to be active
 			activeTetromino = nextTetromino;
