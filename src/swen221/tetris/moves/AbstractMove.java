@@ -5,6 +5,7 @@ package swen221.tetris.moves;
 
 import swen221.tetris.logic.Board;
 import swen221.tetris.logic.Rectangle;
+import swen221.tetris.tetromino.ActiveTetromino;
 import swen221.tetris.tetromino.Tetromino;
 
 /**
@@ -16,20 +17,18 @@ import swen221.tetris.tetromino.Tetromino;
  */
 public abstract class AbstractMove implements Move {
 
+    private int stepsToVacantPos;
+    private int tempRow;
+
 	@Override
 	public boolean isValid(Board board) {
-		// NOTE: to check whether move is valid or not, you can employ step() below to
-		// compute the new board and then check whether the active tetromino is in a
-		// valid position.
+        Tetromino t = board.getTetromino().translate(dx, dy);
 
-//		if(board.getActiveTetromino().isWithin(board.getWidth(), board.getHeight())){ // is the shape within the board
-////			if(board.canPlaceTetromino(board.getActiveTetromino())) { // can you place the tetromino where it is about to be placed?
-////				return true;
-////			}
-////		}
-		return true;
-
-	}
+        if(t.getBoundingBox().getMinX() < 0 || t.getBoundingBox().getMaxX() >= board.getWidth() || t.getBoundingBox().getMinY() < 0) {
+            return false;
+        }
+    return true;
+    }
 
 	/**
 	 * Apply a single step of this move to a given board, producing an updated

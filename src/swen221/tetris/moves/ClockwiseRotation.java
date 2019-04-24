@@ -30,7 +30,14 @@ public class ClockwiseRotation extends AbstractMove implements Move {
 
 	@Override
 	public Board step(Board board) {
-
+		// Create copy of the board to prevent modifying its previous state.
+		board = new Board(board);
+		// Apply translation for this move
+		ActiveTetromino tetromino = board.getActiveTetromino().rotate(1);
+		// Apply the move to the new board.
+		board.setActiveTetromino(tetromino);
+		// Return updated version of board
 		return board;
+
 	}
 }

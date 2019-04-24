@@ -32,7 +32,7 @@ public class Board {
 	 * A row-major representation of the board. Each location contains a reference
 	 * to the tetromino located there.
 	 */
-	public final Tetromino[] cells;  //was private!
+	private final Tetromino[] cells;  //was private!
 
 	/**
 	 * The active tetromino is the one currently being controlled.
@@ -75,6 +75,8 @@ public class Board {
 		return height;
 	}
 
+
+	public Tetromino[] getCells() {return cells;}
 	/**
 	 * Get the active tetromino. This is the tetromino currently being manipulated
 	 * on the board. This may be <code>null</code> if there is no active tetromino.

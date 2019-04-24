@@ -39,6 +39,8 @@ public abstract class AbstractTranslation extends AbstractMove implements Move {
 		this.dy = dy;
 	}
 
+
+
 	@Override
 	public Board apply(Board board) {
 		// Create copy of the board to prevent modifying its previous state.
