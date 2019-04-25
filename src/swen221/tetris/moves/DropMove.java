@@ -55,6 +55,7 @@ public class DropMove implements Move {
 		ghostBoard.setActiveTetromino(ghostPiece); 							//Set ghostPiece as Active Tetromino in ghostBoard
 		Rectangle ghostBox = r;												//Copy actual bounding box
 
+
 		//DELCARING VARIABLES
 //		int bottomRow = ghostBox.getMinY();
 //		int leftMostCol = ghostBox.getMinX();
@@ -80,7 +81,8 @@ public class DropMove implements Move {
 				int id = (currentRow * board.getWidth()) + cellInBox;
 				int idUnder = ((currentRow - 1) * board.getWidth()) + cellInBox;
 
-				//Is the tetromino underneath the current row == null? Then we have landed
+
+
 				if (r.getMinY() == 0) { //if null then we have reached end of board
 					stepsToVacantPos = board.getHeight() - (board.getHeight() - currentRow);
 					return true;
