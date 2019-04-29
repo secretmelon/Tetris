@@ -60,13 +60,6 @@ public class ActiveTetromino implements Tetromino {
 		return tetromino;
 	}
 
-	public boolean isLanded(){
-		if(this.getBoundingBox().getMinY() == 0){
-			return true;
-		}
-		return false;
-	}
-
 	@Override
 	public boolean isWithin(int x, int y) {
 		int dx = x - this.x;
@@ -98,6 +91,7 @@ public class ActiveTetromino implements Tetromino {
 		}
 		return box.translate(x, y);
 	}
+
 
 	/**
 	 * Move this Tetromino by a given amount in the x and/or y direction.

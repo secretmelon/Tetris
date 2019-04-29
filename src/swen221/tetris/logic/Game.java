@@ -144,20 +144,65 @@ public class Game {
 		//
 		ActiveTetromino activeTetromino = board.getActiveTetromino();
 
-		if (activeTetromino != null && board.canPlaceTetromino(activeTetromino)) {
-			// apply gravity
-			activeTetromino = activeTetromino.translate(0, -1);
-		}
-		else if(board.canPlaceTetromino(nextTetromino)){
-			// promote next tetromino to be active
+//		if(activeTetromino.getBoundingBox().getMinY() == 0){
+//			board.placeTetromino(activeTetromino);
+//		}
+		if (activeTetromino == null){      			//If null, activate the next tetromino
 			activeTetromino = nextTetromino;
-			// select the next one in sequence
 			nextTetromino = nextActiveTetromino();
 		}
-		else {
-			// indicates game over status
+		if(isWithinBoard(activeTetromino)){  //If the aT is within the board
+			// apply gravity
+
+//			ActiveTetromino t = activeTetromino;
+//			t.translate(0,-2);
+//			if(!board.canPlaceTetromino(t)){
+//			//	activeTetromino.translate(0,1);
+//				board.placeTetromino(activeTetromino);
+//				activeTetromino = null;
+//			}
+//			else{
+
+			//////////////////
+
+			ActiveTetromino t = activeTetromino;
+			if (board.canPlaceTetromino(t.translate(0,-1))) { //Can you place this tetromino down one? If so, move down.
+				ActiveTetromino newPlacement = board.getActiveTetromino().translate(0, -1);
+				board.setActiveTetromino(newPlacement);
+			}
+			else {
+				//ActiveTetromino newPlacement = board.getActiveTetromino().translate(0, 1);
+				board.placeTetromino(activeTetromino);
+				board.setActiveTetromino(null);
+			}
+
 		}
+
+
+
+		else {
+			board.placeTetromino(activeTetromino);
+			if(board.canPlaceTetromino(nextTetromino)){
+				// promote next tetromino to be active
+				activeTetromino = nextTetromino;
+				// select the next one in sequence
+				nextTetromino = nextActiveTetromino();
+			}
+			else{
+				System.out.println("game over");
+				 }
+		}
+
 		board.setActiveTetromino(activeTetromino);
+	}
+
+
+
+	public boolean isWithinBoard(ActiveTetromino t) {
+		if(t.getBoundingBox().getMinY() > 0 && t.getBoundingBox().getMinX() > 0 && t.getBoundingBox().getMaxX() < board.getWidth()){
+			return true;
+		}
+		return false;
 	}
 
 	// ======================================================================

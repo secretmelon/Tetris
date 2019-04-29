@@ -18,16 +18,10 @@ import swen221.tetris.tetromino.Tetromino;
  */
 public class DropMove implements Move {
 
-	private int stepsToVacantPos;
-	private int tempRow;
-	private int startingMinY;
-	//private ActiveTetromino activeTetronimo;
 
-
-	public int getStepsToVacantPos
+	@Override
 	public boolean isValid(Board board){
 		return true;
-
 	}
 
 	@Override
@@ -37,15 +31,26 @@ public class DropMove implements Move {
 		board = new Board(board);
 		// Apply translation for this move
 
+		boolean dropping = true;
 
-		Tetromino tetromino = board.getActiveTetromino().translate(0, -1);
+		while(dropping) {
+			Tetromino t = board.getActiveTetromino();
+			if (board.canPlaceTetromino(t)) {
+				ActiveTetromino newPlacement = board.getActiveTetromino().translate(0, -1);
+				board.setActiveTetromino(newPlacement);
+			} else {
+				ActiveTetromino newPlacement = board.getActiveTetromino().translate(0, 1);
+				board.placeTetromino(newPlacement);
+				board.setActiveTetromino(null);
+				dropping = false;
+			}
+		}
 
-
-
-
-		// Apply the move to the new board.
-		board.setActiveTetromino(null);
-		// Return updated version of board
+//		Tetromino tetromino = board.getActiveTetromino().translate(0, -1);
+//
+//		// Apply the move to the new board.
+//		board.setActiveTetromino(null);
+//		// Return updated version of board
 		return board;
 	}
 
