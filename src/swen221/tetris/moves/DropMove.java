@@ -34,10 +34,10 @@ public class DropMove implements Move {
 		boolean dropping = true;
 
 		while(dropping) {
-			Tetromino t = board.getActiveTetromino();
-			if (board.canPlaceTetromino(t)) {
-				ActiveTetromino newPlacement = board.getActiveTetromino().translate(0, -1);
-				board.setActiveTetromino(newPlacement);
+			Tetromino t = board.getActiveTetromino(); //current placement of aT
+			if (board.canPlaceTetromino(t)) {  // if current placement is valid
+				ActiveTetromino newPlacement = board.getActiveTetromino().translate(0, -1); // newPlacement = move down
+				board.setActiveTetromino(newPlacement); //set newplacement as active tet
 			} else {
 				ActiveTetromino newPlacement = board.getActiveTetromino().translate(0, 1);
 				board.placeTetromino(newPlacement);
