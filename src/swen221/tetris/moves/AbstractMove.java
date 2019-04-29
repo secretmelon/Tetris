@@ -17,18 +17,9 @@ import swen221.tetris.tetromino.Tetromino;
  */
 public abstract class AbstractMove implements Move {
 
-    private int stepsToVacantPos;
-    private int tempRow;
 
 	@Override
-	public boolean isValid(Board board) {
-        Tetromino t = board.getTetromino().translate(dx, dy);
-
-        if(t.getBoundingBox().getMinX() < 0 || t.getBoundingBox().getMaxX() >= board.getWidth() || t.getBoundingBox().getMinY() < 0) {
-            return false;
-        }
-    return true;
-    }
+	public abstract boolean isValid(Board board);
 
 	/**
 	 * Apply a single step of this move to a given board, producing an updated

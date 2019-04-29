@@ -39,6 +39,43 @@ public abstract class AbstractTranslation extends AbstractMove implements Move {
 		this.dy = dy;
 	}
 
+	@Override
+	public boolean isValid(Board board) {
+		Rectangle r = board.getActiveTetromino().getBoundingBox();
+		ActiveTetromino aT = board.getActiveTetromino();
+		int left = r.getMinX();
+		int right = r.getMaxX();
+		int top = r.getMaxY();
+		int bottom = r.getMinY();
+
+		Tetromino[] cells = board.getCells();
+		int validCount = 0; // Initialise count for every movable cell
+		int cellCount = 0; // Number of cells in tetromino
+
+
+		if(aT.isLanded()){
+			return false;
+		}
+
+		for(int row = top; row >= bottom; row--){
+			for(int cell = left; cell <= right; cell++){
+				cellCount++;
+				int currentCell = (row * board.getWidth() + cell);
+				int translatedCell = ((row + dy) * board.getWidth() + (cell + dx));
+				if( (cells[currentCell] == null && cells[translatedCell] != null)
+						|| (cells[currentCell] != null && cells[translatedCell] == null) ){
+					validCount++;
+				}
+			}
+		}
+		if(validCount == cellCount){
+			return true;
+		}
+
+		return false;
+	}
+
+
 
 
 	@Override

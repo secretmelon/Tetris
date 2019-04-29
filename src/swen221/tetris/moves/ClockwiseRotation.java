@@ -4,8 +4,10 @@
 package swen221.tetris.moves;
 
 import swen221.tetris.logic.Board;
+import swen221.tetris.logic.Rectangle;
 import swen221.tetris.tetromino.ActiveTetromino;
 import swen221.tetris.tetromino.Tetromino;
+
 
 /**
  * Implements a rotation move which is either clockwise or anti-clockwise.
@@ -15,6 +17,44 @@ import swen221.tetris.tetromino.Tetromino;
  *
  */
 public class ClockwiseRotation extends AbstractMove implements Move {
+
+	@Override
+	public boolean isValid(Board board){
+
+		Board b = new Board(board);
+		ActiveTetromino aT = b.getActiveTetromino();
+		Rectangle rotatedR = aT.getBoundingBox().rotateClockwise();
+
+
+		int left = rotatedR.getMinX();
+		int right = rotatedR.getMaxX();
+		int top = rotatedR.getMaxY();
+		int bottom = rotatedR.getMinY();
+
+		Tetromino[] cells = board.getCells();
+		Tetromino[] rotatedCells = b.getCells();
+
+		int vacancyCount = 0;
+		int cellCount = 0;
+
+		for(int row = top; row <= bottom; row--){
+			for(int cell = left; cell <=right; cell++){
+				cellCount++;
+				int actualRotated = (row*board.getWidth()) + cell;
+				if( (rotatedCells[actualRotated] == null && cells[actualRotated] != null) ||
+						(rotatedCells[actualRotated] != null && cells[actualRotated] == null)){
+					vacancyCount++;
+				}
+			}
+		}
+
+		if(vacancyCount == cellCount){
+			return true;
+		}
+
+		return false;
+	}
+
 
 	@Override
 	public Board apply(Board board) {

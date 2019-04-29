@@ -144,7 +144,7 @@ public class Game {
 		//
 		ActiveTetromino activeTetromino = board.getActiveTetromino();
 
-		if (activeTetromino != null && (board.getActiveTetromino().getBoundingBox().getMinY() > 0 )) {
+		if (activeTetromino != null && board.canPlaceTetromino(activeTetromino)) {
 			// apply gravity
 			activeTetromino = activeTetromino.translate(0, -1);
 		}
