@@ -143,9 +143,12 @@ public class Game {
     public void clock() {
         //
         ActiveTetromino activeTetromino = board.getActiveTetromino();
+//        Tetromino activeTetromino = board.getActiveTetromino();
 
         if (activeTetromino == null) {                //If null, activate the next tetromino
             activeTetromino = nextTetromino;
+            nextTetromino = nextActiveTetromino();
+            board.setActiveTetromino(activeTetromino);
         }
         if (isWithinBoard(activeTetromino)) {  //If the aT is within the board
             // apply gravity
@@ -154,7 +157,9 @@ public class Game {
 
             if (!board.canPlaceTetromino(ghostTet.translate(0, -1))) {
                 board.placeTetromino(activeTetromino);
-                    nextTetromino = nextActiveTetromino();
+//                if(tetrominoSequence.hasNext()) {
+                   // nextTetromino = nextActiveTetromino();
+//                }
                 if (board.canPlaceTetromino(nextTetromino)) {
 //                 promote next tetromino to be active
                     board.setActiveTetromino(nextTetromino);
@@ -167,7 +172,6 @@ public class Game {
             }
 
         }
-
     }
 
 
