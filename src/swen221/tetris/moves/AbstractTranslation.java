@@ -43,13 +43,13 @@ public abstract class AbstractTranslation extends AbstractMove implements Move {
 	public boolean isValid(Board board) {
 		Board b = new Board(board);
 		ActiveTetromino t = b.getActiveTetromino();
-		t = t.translate(dx,dy);
-		if(b.canPlaceTetromino(t)){
-			return true;
+		if(t !=null) {
+			t = t.translate(dx, dy);
+			if (b.canPlaceTetromino(t)) {
+				return true;
+			}
 		}
-		else{
-			return false;
-		}
+		return false;
 	}
 
 

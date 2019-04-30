@@ -141,37 +141,64 @@ public class Game {
      * landed, then we will remove full rows, etc.
      */
     public void clock() {
-        //
+//        //
+//        ActiveTetromino activeTetromino = board.getActiveTetromino();
+////        Tetromino activeTetromino = board.getActiveTetromino();
+//
+//        if (activeTetromino == null) {                //If null, activate the next tetromino
+//            activeTetromino = nextTetromino;
+//            nextTetromino = nextActiveTetromino();
+//            board.setActiveTetromino(activeTetromino);
+//        }
+//        if (isWithinBoard(activeTetromino)) {  //If the aT is within the board
+//            // apply gravity
+//
+//            ActiveTetromino ghostTet = activeTetromino;
+//
+//            if (!board.canPlaceTetromino(ghostTet.translate(0, -1))) {
+//                board.placeTetromino(activeTetromino);
+////                if(tetrominoSequence.hasNext()) {
+//                   // nextTetromino = nextActiveTetromino();
+////                }
+//                if (board.canPlaceTetromino(nextTetromino)) {
+////                 promote next tetromino to be active
+//                    board.setActiveTetromino(null);                 // added this
+//                    //board.setActiveTetromino(nextTetromino);   //just changed this!!! commment out
+//                    // select the next one in sequence
+////                    nextTetromino = nextActiveTetromino();
+//                }
+//            } else {
+//                activeTetromino = activeTetromino.translate(0, -1);
+//                board.setActiveTetromino(activeTetromino);
+//            }
+//
+//        }
         ActiveTetromino activeTetromino = board.getActiveTetromino();
-//        Tetromino activeTetromino = board.getActiveTetromino();
 
-        if (activeTetromino == null) {                //If null, activate the next tetromino
+        //If an active Tetromino exists, then move it down one.
+        if(activeTetromino != null){
+            activeTetromino = activeTetromino.translate(0,-1);
+            //Check if Tetromino is not out of bounds or; the tetromino cannot be placed
+            if(!isWithinBoard(activeTetromino) || !board.canPlaceTetromino(activeTetromino)){
+                //Move back up and place it there, then set activeTetromino to null to initiate next tet. in sequence
+                activeTetromino = activeTetromino.translate(0,1);
+                board.placeTetromino(activeTetromino);
+                activeTetromino = null;
+            }
+        }
+
+        //Check if a 'nextTetromino' exists, and whether it can be placed
+        else if(tetrominoSequence.hasNext() && board.canPlaceTetromino(nextTetromino)){
+            //Promote next in line to be active, and the next-next to be at the top of the sequence.
             activeTetromino = nextTetromino;
             nextTetromino = nextActiveTetromino();
-            board.setActiveTetromino(activeTetromino);
         }
-        if (isWithinBoard(activeTetromino)) {  //If the aT is within the board
-            // apply gravity
 
-            ActiveTetromino ghostTet = activeTetromino;
-
-            if (!board.canPlaceTetromino(ghostTet.translate(0, -1))) {
-                board.placeTetromino(activeTetromino);
-//                if(tetrominoSequence.hasNext()) {
-                   // nextTetromino = nextActiveTetromino();
-//                }
-                if (board.canPlaceTetromino(nextTetromino)) {
-//                 promote next tetromino to be active
-                    board.setActiveTetromino(nextTetromino);
-                    // select the next one in sequence
-//                    nextTetromino = nextActiveTetromino();
-                }
-            } else {
-                activeTetromino = activeTetromino.translate(0, -1);
-                board.setActiveTetromino(activeTetromino);
-            }
-
+        else{
+            //Game over
         }
+        //Update the active tetromino to be whatever it has just been changed to.
+        board.setActiveTetromino(activeTetromino);
     }
 
 
